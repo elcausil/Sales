@@ -1,0 +1,46 @@
+import java.nio.*;
+import java.io.*;
+import java.time.LocalDate;
+import java.nio.file.Path;
+import java.util.*;
+class Main {
+  public static void main(String[] args) {
+    String fileName = "datos.csv";
+    Path filePath = Path.of(fileName);
+        List<Sales> salesDataList = Files.lines(filePath)
+                .skip(1) // skip header line
+                .map(line -> {
+                    String[] fields = line.split(",");
+                    SalesData salesData = new SalesData();
+                    salesData.setOrderNumber(Integer.parseInt(fields[0]));
+                    salesData.setQuantityOrdered(Integer.parseInt(fields[1]));
+                    salesData.setPriceEach(Double.parseDouble(fields[2]));
+                    salesData.setOrderLineNumber(Integer.parseInt(fields[3]));
+                    salesData.setSales(Double.parseDouble(fields[4]));
+                    salesData.setOrderDate(LocalDate.parse(fields[5], DateTimeFormatter.ofPattern("M/d/yyyy")));
+                    salesData.setStatus(fields[6]);
+                    salesData.setQuarterId(Integer.parseInt(fields[7]));
+                    salesData.setMonthId(Integer.parseInt(fields[8]));
+                    salesData.setYearId(Integer.parseInt(fields[9]));
+                    salesData.setProductLine(fields[10]);
+                    salesData.setMsrp(Double.parseDouble(fields[11]));
+                    salesData.setProductCode(fields[12]);
+                    salesData.setCustomerName(fields[13]);
+                    salesData.setPhone(fields[14]);
+                    salesData.setAddressLine1(fields[15]);
+                    salesData.setAddressLine2(fields[16]);
+                    salesData.setCity(fields[17]);
+                    salesData.setState(fields[18]);
+                    salesData.setPostalCode(fields[19]);
+                    salesData.setCountry(fields[20]);
+                    salesData.setTerritory(fields[21]);
+                    salesData.setContactLastName(fields[22]);
+                    salesData.setContactFirstName(fields[23]);
+                    salesData.setDealSize(fields[24]);
+                    return salesData;
+                })
+                .collect(Collectors.toList());
+    lines.close();
+        // Do something with the salesDataList
+  }
+}
